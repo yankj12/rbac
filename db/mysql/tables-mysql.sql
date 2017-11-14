@@ -1,4 +1,23 @@
 
+--=============================================================
+--一些基础表，非RBAC模型中核心表，但是为了更好开发而需要的表
+--=============================================================
+
+CREATE TABLE
+    sequence
+    (
+        name VARCHAR(50) NOT NULL,
+        current_value bigint NOT NULL,
+        increment INT DEFAULT '1' NOT NULL,
+        PRIMARY KEY (name)
+    )
+    ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--=============================================================
+--以下是RBAC权限模型中的核心表
+--=============================================================
+
+
 --用户表
 CREATE TABLE
     rbac_user
