@@ -1,6 +1,6 @@
 
 --=============================================================
---һЩ����������RBACģ���к��ı�������Ϊ�˸��ÿ�������Ҫ�ı�
+--一些基础表，非RBAC模型中核心表，但是为了更好开发而需要的表
 --=============================================================
 
 CREATE TABLE
@@ -14,97 +14,97 @@ CREATE TABLE
     ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --=============================================================
---������RBACȨ��ģ���еĺ��ı�
+--以下是RBAC权限模型中的核心表
 --=============================================================
 
 
---�û���
+--用户表
 DROP TABLE IF EXISTS rbac_user;
 CREATE TABLE
     rbac_user
     (
-        userId VARCHAR(20) NOT NULL COMMENT '�û�Id',
-        userName VARCHAR(60) COMMENT '�û�����',
-        validStatus VARCHAR(2) DEFAULT '1' COMMENT '��Ч״̬',
-        insertTime DATETIME COMMENT '����ʱ��',
-        updateTime DATETIME COMMENT '����ʱ��',
+        userId VARCHAR(20) NOT NULL COMMENT '用户Id',
+        userName VARCHAR(60) COMMENT '用户名称',
+        validStatus VARCHAR(2) DEFAULT '1' COMMENT '有效状态',
+        insertTime DATETIME COMMENT '创建时间',
+        updateTime DATETIME COMMENT '创建时间',
         PRIMARY KEY (userId)
     )
-    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='�û���';
+    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
---��ɫ��
+--角色表
 DROP TABLE IF EXISTS rbac_role;
 CREATE TABLE
     rbac_role
     (
-        roleId VARCHAR(20) NOT NULL COMMENT '��ɫId',
-        roleName VARCHAR(40) COMMENT '��ɫ����',
-        validStatus VARCHAR(2) DEFAULT '1' COMMENT '��Ч״̬',
-        insertTime DATETIME COMMENT '����ʱ��',
-        updateTime DATETIME COMMENT '�޸�ʱ��',
+        roleId VARCHAR(20) NOT NULL COMMENT '角色Id',
+        roleName VARCHAR(40) COMMENT '角色名称',
+        validStatus VARCHAR(2) DEFAULT '1' COMMENT '有效状态',
+        insertTime DATETIME COMMENT '创建时间',
+        updateTime DATETIME COMMENT '修改时间',
         PRIMARY KEY (roleId)
     )
-    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='�û���';
+    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
---�û����
+--用户组表
 DROP TABLE IF EXISTS rbac_group;
 CREATE TABLE
     rbac_group
     (
-        groupId VARCHAR(20) NOT NULL COMMENT '��Id',
-        groupName VARCHAR(60) COMMENT '������',
-        validStatus VARCHAR(2) DEFAULT '1' COMMENT '��Ч״̬',
-        insertTime DATETIME COMMENT '����ʱ��',
-        updateTime DATETIME COMMENT '�޸�ʱ��',
+        groupId VARCHAR(20) NOT NULL COMMENT '组Id',
+        groupName VARCHAR(60) COMMENT '组名称',
+        validStatus VARCHAR(2) DEFAULT '1' COMMENT '有效状态',
+        insertTime DATETIME COMMENT '创建时间',
+        updateTime DATETIME COMMENT '修改时间',
         PRIMARY KEY (groupId)
     )
-    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='�û����';
+    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户组表';
 
---���ɫ��ϵ��
+--组角色关系表
 DROP TABLE IF EXISTS rbac_group_role;
 CREATE TABLE
     rbac_group_role
     (
-        groupId VARCHAR(20) NOT NULL COMMENT '��Id',
-        groupName VARCHAR(60) COMMENT '������',
-        roleId VARCHAR(20) NOT NULL COMMENT '��ɫId',
-        roleName VARCHAR(60) COMMENT '��ɫ����',
-        validStatus VARCHAR(2) DEFAULT '1' COMMENT '��Ч״̬',
-        insertTime DATETIME COMMENT '����ʱ��',
-        updateTime DATETIME COMMENT '�޸�ʱ��',
+        groupId VARCHAR(20) NOT NULL COMMENT '组Id',
+        groupName VARCHAR(60) COMMENT '组名称',
+        roleId VARCHAR(20) NOT NULL COMMENT '角色Id',
+        roleName VARCHAR(60) COMMENT '角色名称',
+        validStatus VARCHAR(2) DEFAULT '1' COMMENT '有效状态',
+        insertTime DATETIME COMMENT '创建时间',
+        updateTime DATETIME COMMENT '修改时间',
         PRIMARY KEY (groupId, roleId)
     )
-    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='���ɫ��ϵ��';
+    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组角色关系表';
 
---�û����ϵ��
+--用户组关系表
 DROP TABLE IF EXISTS rbac_user_group;
 CREATE TABLE
     rbac_user_group
     (
-        userId VARCHAR(20) NOT NULL COMMENT '�û�Id',
-        userName VARCHAR(60) COMMENT '�û�����',
-        groupId VARCHAR(20) NOT NULL COMMENT '��Id',
-        groupName VARCHAR(60) COMMENT '������',
-        validStatus VARCHAR(2) DEFAULT '1' COMMENT '��Ч״̬',
-        insertTime DATETIME COMMENT '����ʱ��',
-        updateTime DATETIME COMMENT '�޸�ʱ��',
+        userId VARCHAR(20) NOT NULL COMMENT '用户Id',
+        userName VARCHAR(60) COMMENT '用户名称',
+        groupId VARCHAR(20) NOT NULL COMMENT '组Id',
+        groupName VARCHAR(60) COMMENT '组名称',
+        validStatus VARCHAR(2) DEFAULT '1' COMMENT '有效状态',
+        insertTime DATETIME COMMENT '创建时间',
+        updateTime DATETIME COMMENT '修改时间',
         PRIMARY KEY (userId, groupId)
     )
-    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='�û����ϵ��';
+    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户组关系表';
 
---�û���ɫ��ϵ��
+--用户角色关系表
 DROP TABLE IF EXISTS rbac_user_role;
 CREATE TABLE
     rbac_user_role
     (
-        userId VARCHAR(20) NOT NULL COMMENT '�û�Id',
-        userName VARCHAR(60) COMMENT '�û�����',
-        roleId VARCHAR(20) NOT NULL COMMENT '��ɫId',
-        roleName VARCHAR(60) COMMENT '��ɫ����',
-        validStatus VARCHAR(2) DEFAULT '1' COMMENT '��Ч״̬',
-        insertTime DATETIME COMMENT '����ʱ��',
-        updateTime DATETIME COMMENT '�޸�ʱ��',
+        userId VARCHAR(20) NOT NULL COMMENT '用户Id',
+        userName VARCHAR(60) COMMENT '用户名称',
+        roleId VARCHAR(20) NOT NULL COMMENT '角色Id',
+        roleName VARCHAR(60) COMMENT '角色名称',
+        validStatus VARCHAR(2) DEFAULT '1' COMMENT '有效状态',
+        insertTime DATETIME COMMENT '创建时间',
+        updateTime DATETIME COMMENT '修改时间',
         PRIMARY KEY (userId, roleId)
     )
-    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='�û���ɫ��ϵ��';
+    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色关系表';
 

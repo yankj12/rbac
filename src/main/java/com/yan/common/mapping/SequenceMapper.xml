@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yan.common.mapping.SequenceMapper">
+
+	<insert id="insertSequence" parameterType="com.yan.common.model.Sequence">
+		INSERT INTO sequence 
+		(name, current_value, increment)
+		VALUES 
+		(#{name}, #{currentValue}, #{increment});
+	</insert>
+    
+    <select id="setVal" parameterType="java.util.Map" 
+        resultType="long">
+        SELECT SETVAL(#{name}, #{currentValue});
+    </select>
+	
+	<select id="currVal" parameterType="string" 
+        resultType="long">
+        SELECT CURRVAL(#{name});
+    </select>
+	
+	<select id="nextVal" parameterType="string" 
+        resultType="long">
+        SELECT NEXTVAL(#{name});
+    </select>
+	
+</mapper>
