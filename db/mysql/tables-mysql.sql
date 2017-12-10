@@ -44,7 +44,7 @@ CREATE TABLE
         updateTime DATETIME COMMENT '修改时间',
         PRIMARY KEY (roleId)
     )
-    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
+    ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 --用户组表
 DROP TABLE IF EXISTS rbac_group;
@@ -108,3 +108,35 @@ CREATE TABLE
     )
     ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色关系表';
 
+--在rbac_user表增加一列id，用id来做主键
+alter table rbac_user add column id varchar(20) first;
+
+--修改rbac_user表的主键
+ALTER TABLE rbac_user MODIFY COLUMN id varchar(20) NOT NULL;
+ALTER TABLE rbac_user DROP PRIMARY KEY;
+ALTER TABLE rbac_user ADD CONSTRAINT rbac_user_pk PRIMARY KEY (id);
+commit;
+
+--修改rbac_role表的主键
+alter table rbac_role add column id varchar(20) first;
+ALTER TABLE rbac_role MODIFY COLUMN id varchar(20) NOT NULL;
+ALTER TABLE rbac_role DROP PRIMARY KEY;
+ALTER TABLE rbac_role ADD CONSTRAINT rbac_role_pk PRIMARY KEY (id);
+
+--修改rbac_group表的主键
+alter table rbac_group add column id varchar(20) first;
+ALTER TABLE rbac_group MODIFY COLUMN id varchar(20) NOT NULL;
+ALTER TABLE rbac_group DROP PRIMARY KEY;
+ALTER TABLE rbac_group ADD CONSTRAINT rbac_group_pk PRIMARY KEY (id);
+
+--修改rbac_user_group表的主键
+alter table rbac_user_group add column id varchar(20) first;
+ALTER TABLE rbac_user_group MODIFY COLUMN id varchar(20) NOT NULL;
+ALTER TABLE rbac_user_group DROP PRIMARY KEY;
+ALTER TABLE rbac_user_group ADD CONSTRAINT rbac_user_group_pk PRIMARY KEY (id);
+
+--修改rbac_user_role表的主键
+alter table rbac_user_role add column id varchar(20) first;
+ALTER TABLE rbac_user_role MODIFY COLUMN id varchar(20) NOT NULL;
+ALTER TABLE rbac_user_role DROP PRIMARY KEY;
+ALTER TABLE rbac_user_role ADD CONSTRAINT rbac_user_role_pk PRIMARY KEY (id);

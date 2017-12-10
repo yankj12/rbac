@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yan.rbac.mapping.RbacUserMapper">
+	
+	<select id="getUserByUserId" parameterType="string" 
+        resultType="com.yan.rbac.model.RbacUser">
+        select * from rbac_user where userId=#{userId} and validStatus='1'
+    </select>
+    
+    <select id="getUserById" parameterType="string" 
+        resultType="com.yan.rbac.model.RbacUser">
+        select * from rbac_user where id=#{id}
+    </select>
+    
+    <select id="getCountByCondition" parameterType="java.util.Map" resultType="int">
+    	select count(*) from rbac_user
+    	<trim prefix="where" prefixOverrides="and|or"> 
+    		<if test="validStatus != null and validStatus != ''">
+    			validStatus=#{validStatus}
+    		</if>
+    		<if test="userId != null and userId != ''">
+    			and userId=#{userId}
+    		</if>
+    		<if test="userName != null and userName != ''">
+    			and userName like #{userName}
+    		</if>
+    		<if test="startTime != null">
+    			and insertTime &gt;= #{startTime}
+    		</if>
+    		<if test="endTime != null">
+    			and insertTime &lt;= #{endTime}
+    		</if>
+    		
+    	</trim>
+    </select>
+    
+    <select id="getUsersByCondition" parameterType="java.util.Map" resultType="com.yan.rbac.model.RbacUser">
+    	select * from rbac_user
+    	<trim prefix="where" prefixOverrides="and|or"> 
+    		<if test="validStatus != null and validStatus != ''">
+    			validStatus=#{validStatus}
+    		</if>
+    		<if test="userId != null and userId != ''">
+    			and userId=#{userId}
+    		</if>
+    		<if test="userName != null and userName != ''">
+    			and userName like #{userName}
+    		</if>
+    		<if test="startTime != null">
+    			and insertTime &gt;= #{startTime}
+    		</if>
+    		<if test="endTime != null">
+    			and insertTime &lt;= #{endTime}
+    		</if>
+    	</trim>
+    	
+    	<!-- 这两个不能放在trim中，否则当其他条件为空的时候，会出现 where limit的情况 -->
+   		<if test="offset != null and pageSize != null ">
+   			limit #{offset},#{pageSize}
+   		</if>
+    </select>
+    
+    <insert id="insertUser" parameterType="com.yan.rbac.model.RbacUser">
+    	insert into rbac_user 
+    	(id, userId, userName, validStatus, insertTime, updateTime) 
+    	values 
+    	(#{id}, #{userId}, #{userName}, #{validStatus}, #{insertTime}, #{updateTime})
+    </insert>
+    
+    <update id="updateUserById" parameterType="com.yan.rbac.model.RbacUser">
+    	update rbac_user
+    	set userId=#{userId}, userName=#{userName}, validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where id=#{id}
+    </update>
+    
+    <update id="updateUserByUserId" parameterType="com.yan.rbac.model.RbacUser">
+    	update rbac_user
+    	set userName=#{userName}, validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where userId=#{userId}
+    </update>
+    
+    <update id="updateUserValidStatusByUserId" parameterType="com.yan.rbac.model.RbacUser">
+    	update rbac_user
+    	set validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where userId=#{userId}
+    </update>
+    
+</mapper>

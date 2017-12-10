@@ -22,31 +22,6 @@
   </parent>
   
   <dependencies>
-    <dependency>
-        <groupId>org.mongodb</groupId>
-        <artifactId>mongodb-driver</artifactId>
-        <version>3.5.0</version>
-    </dependency>
-	<dependency>
-	    <groupId>org.mongodb</groupId>
-	    <artifactId>mongo-java-driver</artifactId>
-	    <version>3.5.0</version>
-	</dependency>
-    <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
-    <!-- HSSF 	Excel XLS 	poi 	For HSSF only, if common SS is needed see below -->
-	<dependency>
-	    <groupId>org.apache.poi</groupId>
-	    <artifactId>poi</artifactId>
-	    <version>3.17</version>
-	</dependency>
-	<!-- XSSF 	Excel XLSX 	poi-ooxml -->
-	<dependency>
-	    <groupId>org.apache.poi</groupId>
-	    <artifactId>poi-ooxml</artifactId>
-	    <version>3.17</version>
-	</dependency>
-	
-	
 	<dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
@@ -66,6 +41,11 @@
 	    <groupId>org.mybatis</groupId>
 	    <artifactId>mybatis</artifactId>
 	    <version>3.4.5</version>
+	</dependency>
+	<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>6.0.6</version>
 	</dependency>
 
   </dependencies>

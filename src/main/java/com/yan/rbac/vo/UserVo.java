@@ -1,9 +1,9 @@
-package com.yan.rbac.model;
+package com.yan.rbac.vo;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class RbacUserGroup implements Serializable{
+public class UserVo implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -12,10 +12,6 @@ public class RbacUserGroup implements Serializable{
 	private String userId;
 	
 	private String userName;
-	
-	private String groupId;
-	
-	private String groupName;
 	
 	private String validStatus;
 
@@ -70,21 +66,4 @@ public class RbacUserGroup implements Serializable{
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-
-	public String getGroupId() {
-		return groupId;
-	}
-
-	public void setGroupId(String groupId) {
-		this.groupId = groupId;
-	}
-
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
-	
 }

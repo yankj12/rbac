@@ -1,8 +1,11 @@
 package com.yan.rbac.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class RbacUser {
+public class RbacUser implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private String id;
 	

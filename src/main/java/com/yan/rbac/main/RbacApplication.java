@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan("com.yan.interview.controller")
+@ComponentScan("com.yan.rbac.controller")
 @EnableAutoConfiguration
 @SpringBootApplication
 public class RbacApplication {
