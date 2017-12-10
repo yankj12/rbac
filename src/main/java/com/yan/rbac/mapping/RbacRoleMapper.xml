@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yan.rbac.mapping.RbacRoleMapper">
+	
+	<select id="getRoleByUserId" parameterType="string" 
+        resultType="com.yan.rbac.model.RbacRole">
+        select * from rbac_role where roleId=#{roleId} and validStatus='1'
+    </select>
+    
+    <select id="getRoleById" parameterType="string" 
+        resultType="com.yan.rbac.model.RbacRole">
+        select * from rbac_role where id=#{id}
+    </select>
+    
+    <select id="getCountByCondition" parameterType="java.util.Map" resultType="int">
+    	select count(*) from rbac_role
+    	<trim prefix="where" prefixOverrides="and|or"> 
+    		<if test="validStatus != null and validStatus != ''">
+    			validStatus=#{validStatus}
+    		</if>
+    		<if test="roleId != null and roleId != ''">
+    			and roleId=#{roleId}
+    		</if>
+    		<if test="roleName != null and roleName != ''">
+    			<bind name="roleName" value="'%' + _parameter.roleName + '%'" />
+    			and roleName like #{roleName}
+    		</if>
+    		<if test="startTime != null">
+    			and insertTime &gt;= #{startTime}
+    		</if>
+    		<if test="endTime != null">
+    			and insertTime &lt;= #{endTime}
+    		</if>
+    		
+    	</trim>
+    </select>
+    
+    <select id="getRolesByCondition" parameterType="java.util.Map" resultType="com.yan.rbac.model.RbacRole">
+    	select * from rbac_role
+    	<trim prefix="where" prefixOverrides="and|or"> 
+    		<if test="validStatus != null and validStatus != ''">
+    			validStatus=#{validStatus}
+    		</if>
+    		<if test="roleId != null and roleId != ''">
+    			and roleId=#{roleId}
+    		</if>
+    		<if test="roleName != null and roleName != ''">
+    			<bind name="roleName" value="'%' + _parameter.roleName + '%'" />
+    			and roleName like #{roleName}
+    		</if>
+    		<if test="startTime != null">
+    			and insertTime &gt;= #{startTime}
+    		</if>
+    		<if test="endTime != null">
+    			and insertTime &lt;= #{endTime}
+    		</if>
+    	</trim>
+    	
+    	<!-- 这两个不能放在trim中，否则当其他条件为空的时候，会出现 where limit的情况 -->
+   		<if test="offset != null and pageSize != null ">
+   			limit #{offset},#{pageSize}
+   		</if>
+    </select>
+    
+    <insert id="insertRole" parameterType="com.yan.rbac.model.RbacRole">
+    	insert into rbac_role 
+    	(id, roleId, roleName, validStatus, insertTime, updateTime) 
+    	values 
+    	(#{id}, #{roleId}, #{roleName}, #{validStatus}, #{insertTime}, #{updateTime})
+    </insert>
+    
+    <update id="updateRoleById" parameterType="com.yan.rbac.model.RbacRole">
+    	update rbac_role
+    	set roleId=#{roleId}, roleName=#{roleName}, validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where id=#{id}
+    </update>
+    
+    <update id="updateRoleByUserId" parameterType="com.yan.rbac.model.RbacRole">
+    	update rbac_role
+    	set roleName=#{roleName}, validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where roleId=#{roleId}
+    </update>
+    
+    <update id="updateRoleValidStatusByRoleId" parameterType="com.yan.rbac.model.RbacRole">
+    	update rbac_role
+    	set validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where roleId=#{roleId}
+    </update>
+    
+</mapper>

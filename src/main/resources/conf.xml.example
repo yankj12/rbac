@@ -18,6 +18,10 @@
         <mapper resource="com/yan/common/mapping/TransCodeMapper.xml"/>
         
         <mapper resource="com/yan/rbac/mapping/RbacUserMapper.xml"/>
+        <mapper resource="com/yan/rbac/mapping/RbacRoleMapper.xml"/>
+        <mapper resource="com/yan/rbac/mapping/RbacGroupMapper.xml"/>
+        <mapper resource="com/yan/rbac/mapping/RbacUserRoleMapper.xml"/>
+        <mapper resource="com/yan/rbac/mapping/RbacUserGroupMapper.xml"/>
         
     </mappers>
 </configuration>

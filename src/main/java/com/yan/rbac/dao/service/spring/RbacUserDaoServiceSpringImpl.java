@@ -22,7 +22,7 @@ public class RbacUserDaoServiceSpringImpl implements RbacUserDaoService{
 	public RbacUser getUserByUserId(String userId) {
 		RbacUser user = null;
 		SqlSession sqlSession = JdbcUtil.getSqlSession(true);
-		String statement = MAPPER_NAME_SPACE + "." + "getMenuByPK";
+		String statement = MAPPER_NAME_SPACE + "." + "getUserByUserId";
 		user = sqlSession.selectOne(statement, userId);
 		
 		sqlSession.close();
@@ -33,7 +33,7 @@ public class RbacUserDaoServiceSpringImpl implements RbacUserDaoService{
 	public RbacUser getUserById(String id) {
 		RbacUser user = null;
 		SqlSession sqlSession = JdbcUtil.getSqlSession(true);
-		String statement = MAPPER_NAME_SPACE + "." + "getMenuByPK";
+		String statement = MAPPER_NAME_SPACE + "." + "getUserById";
 		user = sqlSession.selectOne(statement, id);
 		
 		sqlSession.close();

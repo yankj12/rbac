@@ -22,6 +22,7 @@
     			and userId=#{userId}
     		</if>
     		<if test="userName != null and userName != ''">
+    			<bind name="userName" value="'%' + _parameter.userName + '%'" />
     			and userName like #{userName}
     		</if>
     		<if test="startTime != null">
@@ -44,6 +45,7 @@
     			and userId=#{userId}
     		</if>
     		<if test="userName != null and userName != ''">
+    			<bind name="userName" value="'%' + _parameter.userName + '%'" />
     			and userName like #{userName}
     		</if>
     		<if test="startTime != null">

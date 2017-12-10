@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yan.rbac.mapping.RbacGroupMapper">
+	
+	<select id="getGroupByGroupId" parameterType="string" 
+        resultType="com.yan.rbac.model.RbacGroup">
+        select * from rbac_group where groupId=#{groupId} and validStatus='1'
+    </select>
+    
+    <select id="getGroupById" parameterType="string" 
+        resultType="com.yan.rbac.model.RbacGroup">
+        select * from rbac_group where id=#{id}
+    </select>
+    
+    <select id="getCountByCondition" parameterType="java.util.Map" resultType="int">
+    	select count(*) from rbac_group
+    	<trim prefix="where" prefixOverrides="and|or"> 
+    		<if test="validStatus != null and validStatus != ''">
+    			validStatus=#{validStatus}
+    		</if>
+    		<if test="groupId != null and groupId != ''">
+    			and groupId=#{groupId}
+    		</if>
+    		<if test="groupName != null and groupName != ''">
+    			<bind name="groupName" value="'%' + _parameter.groupName + '%'" />
+    			and groupName like #{groupName}
+    		</if>
+    		<if test="startTime != null">
+    			and insertTime &gt;= #{startTime}
+    		</if>
+    		<if test="endTime != null">
+    			and insertTime &lt;= #{endTime}
+    		</if>
+    		
+    	</trim>
+    </select>
+    
+    <select id="getGroupsByCondition" parameterType="java.util.Map" resultType="com.yan.rbac.model.RbacGroup">
+    	select * from rbac_group
+    	<trim prefix="where" prefixOverrides="and|or"> 
+    		<if test="validStatus != null and validStatus != ''">
+    			validStatus=#{validStatus}
+    		</if>
+    		<if test="groupId != null and groupId != ''">
+    			and groupId=#{groupId}
+    		</if>
+    		<if test="groupName != null and groupName != ''">
+    			<bind name="groupName" value="'%' + _parameter.groupName + '%'" />
+    			and groupName like #{groupName}
+    		</if>
+    		<if test="startTime != null">
+    			and insertTime &gt;= #{startTime}
+    		</if>
+    		<if test="endTime != null">
+    			and insertTime &lt;= #{endTime}
+    		</if>
+    	</trim>
+    	
+    	<!-- 这两个不能放在trim中，否则当其他条件为空的时候，会出现 where limit的情况 -->
+   		<if test="offset != null and pageSize != null ">
+   			limit #{offset},#{pageSize}
+   		</if>
+    </select>
+    
+    <insert id="insertGroup" parameterType="com.yan.rbac.model.RbacGroup">
+    	insert into rbac_group 
+    	(id, groupId, groupName, validStatus, insertTime, updateTime) 
+    	values 
+    	(#{id}, #{groupId}, #{groupName}, #{validStatus}, #{insertTime}, #{updateTime})
+    </insert>
+    
+    <update id="updateGroupById" parameterType="com.yan.rbac.model.RbacGroup">
+    	update rbac_group
+    	set groupId=#{groupId}, groupName=#{groupName}, validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where id=#{id}
+    </update>
+    
+    <update id="updateGroupByUserId" parameterType="com.yan.rbac.model.RbacGroup">
+    	update rbac_group
+    	set groupName=#{groupName}, validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where groupId=#{groupId}
+    </update>
+    
+    <update id="updateGroupValidStatusByUserId" parameterType="com.yan.rbac.model.RbacGroup">
+    	update rbac_group
+    	set validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where groupId=#{groupId}
+    </update>
+    
+</mapper>

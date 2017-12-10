@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yan.rbac.mapping.RbacUserRoleMapper">
+	
+	<select id="getUserRoleByUserIdAndRoleId" parameterType="java.util.Map" 
+        resultType="com.yan.rbac.model.RbacUserRole">
+        select * from rbac_user_role where userId=#{userId} and roleId=#{roleId} and validStatus='1'
+    </select>
+    
+    <select id="getUserRoleById" parameterType="java.util.Map" 
+        resultType="com.yan.rbac.model.RbacUserRole">
+        select * from rbac_user_role where id=#{id}
+    </select>
+    
+    <select id="getCountByCondition" parameterType="java.util.Map" resultType="int">
+    	select count(*) from rbac_user_role
+    	<trim prefix="where" prefixOverrides="and|or"> 
+    		<if test="validStatus != null and validStatus != ''">
+    			validStatus=#{validStatus}
+    		</if>
+    		<if test="userId != null and userId != ''">
+    			and userId=#{userId}
+    		</if>
+    		<if test="userName != null and userName != ''">
+    			<bind name="userName" value="'%' + _parameter.userName + '%'" />
+    			and userName like #{userName}
+    		</if>
+    		<if test="roleId != null and roleId != ''">
+    			and roleId=#{roleId}
+    		</if>
+    		<if test="roleName != null and roleName != ''">
+    			<bind name="roleName" value="'%' + _parameter.roleName + '%'" />
+    			and roleName like #{roleName}
+    		</if>
+    		<if test="startTime != null">
+    			and insertTime &gt;= #{startTime}
+    		</if>
+    		<if test="endTime != null">
+    			and insertTime &lt;= #{endTime}
+    		</if>
+    		
+    	</trim>
+    </select>
+    
+    <select id="getUserRolesByCondition" parameterType="java.util.Map" resultType="com.yan.rbac.model.RbacUserRole">
+    	select * from rbac_user_role
+    	<trim prefix="where" prefixOverrides="and|or"> 
+    		<if test="validStatus != null and validStatus != ''">
+    			validStatus=#{validStatus}
+    		</if>
+    		<if test="userId != null and userId != ''">
+    			and userId=#{userId}
+    		</if>
+    		<if test="userName != null and userName != ''">
+    			<bind name="userName" value="'%' + _parameter.userName + '%'" />
+    			and userName like #{userName}
+    		</if>
+    		<if test="roleId != null and roleId != ''">
+    			and roleId=#{roleId}
+    		</if>
+    		<if test="roleName != null and roleName != ''">
+    			<bind name="roleName" value="'%' + _parameter.roleName + '%'" />
+    			and roleName like #{roleName}
+    		</if>
+    		<if test="startTime != null">
+    			and insertTime &gt;= #{startTime}
+    		</if>
+    		<if test="endTime != null">
+    			and insertTime &lt;= #{endTime}
+    		</if>
+    	</trim>
+    	
+    	<!-- 这两个不能放在trim中，否则当其他条件为空的时候，会出现 where limit的情况 -->
+   		<if test="offset != null and pageSize != null ">
+   			limit #{offset},#{pageSize}
+   		</if>
+    </select>
+    
+    <insert id="insertUserRole" parameterType="com.yan.rbac.model.RbacUserRole">
+    	insert into rbac_user_role 
+    	(id, userId, userName, roleId, roleName, validStatus, insertTime, updateTime) 
+    	values 
+    	(#{id}, #{userId}, #{userName}, #{roleId}, #{roleName}, #{validStatus}, #{insertTime}, #{updateTime})
+    </insert>
+    
+    <update id="updateUserRoleById" parameterType="com.yan.rbac.model.RbacUserRole">
+    	update rbac_user_role
+    	set userId=#{userId}, userName=#{userName}, roleId=#{roleId}, roleName=#{roleName}, validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where id=#{id}
+    </update>
+    
+    <update id="updateUserRoleByUserIdAndRoleId" parameterType="com.yan.rbac.model.RbacUserRole">
+    	update rbac_user_role
+    	set userName=#{userName}, roleName=#{roleName}, validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where userId=#{userId} and roleId=#{roleId}
+    </update>
+    
+    <update id="updateUserRoleValidStatusByUserIdAndRoleId" parameterType="com.yan.rbac.model.RbacUserRole">
+    	update rbac_user_role
+    	set validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where userId=#{userId} and roleId=#{roleId}
+    </update>
+    
+</mapper>

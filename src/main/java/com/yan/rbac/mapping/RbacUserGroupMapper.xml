@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yan.rbac.mapping.RbacUserGroupMapper">
+	
+	<select id="getUserGroupByUserIdAndGroupId" parameterType="java.util.Map" 
+        resultType="com.yan.rbac.model.RbacUserGroup">
+        select * from rbac_user_group where userId=#{userId} and groupId=#{groupId} and validStatus='1'
+    </select>
+    
+    <select id="getUserGroupById" parameterType="string" 
+        resultType="com.yan.rbac.model.RbacUserGroup">
+        select * from rbac_user_group where id=#{id}
+    </select>
+    
+    <select id="getCountByCondition" parameterType="java.util.Map" resultType="int">
+    	select count(*) from rbac_user_group
+    	<trim prefix="where" prefixOverrides="and|or"> 
+    		<if test="validStatus != null and validStatus != ''">
+    			validStatus=#{validStatus}
+    		</if>
+    		<if test="userId != null and userId != ''">
+    			and userId=#{userId}
+    		</if>
+    		<if test="userName != null and userName != ''">
+    			<bind name="userName" value="'%' + _parameter.userName + '%'" />
+    			and userName like #{userName}
+    		</if>
+    		<if test="groupId != null and groupId != ''">
+    			and groupId=#{groupId}
+    		</if>
+    		<if test="groupName != null and groupName != ''">
+    			<bind name="groupName" value="'%' + _parameter.groupName + '%'" />
+    			and groupName like #{groupName}
+    		</if>
+    		<if test="startTime != null">
+    			and insertTime &gt;= #{startTime}
+    		</if>
+    		<if test="endTime != null">
+    			and insertTime &lt;= #{endTime}
+    		</if>
+    		
+    	</trim>
+    </select>
+    
+    <select id="getUserGroupsByCondition" parameterType="java.util.Map" resultType="com.yan.rbac.model.RbacUserGroup">
+    	select * from rbac_user_group
+    	<trim prefix="where" prefixOverrides="and|or"> 
+    		<if test="validStatus != null and validStatus != ''">
+    			validStatus=#{validStatus}
+    		</if>
+    		<if test="userId != null and userId != ''">
+    			and userId=#{userId}
+    		</if>
+    		<if test="userName != null and userName != ''">
+    			<bind name="userName" value="'%' + _parameter.userName + '%'" />
+    			and userName like #{userName}
+    		</if>
+    		<if test="groupId != null and groupId != ''">
+    			and groupId=#{groupId}
+    		</if>
+    		<if test="groupName != null and groupName != ''">
+    			<bind name="groupName" value="'%' + _parameter.groupName + '%'" />
+    			and groupName like #{groupName}
+    		</if>
+    		<if test="startTime != null">
+    			and insertTime &gt;= #{startTime}
+    		</if>
+    		<if test="endTime != null">
+    			and insertTime &lt;= #{endTime}
+    		</if>
+    	</trim>
+    	
+    	<!-- 这两个不能放在trim中，否则当其他条件为空的时候，会出现 where limit的情况 -->
+   		<if test="offset != null and pageSize != null ">
+   			limit #{offset},#{pageSize}
+   		</if>
+    </select>
+    
+    <insert id="insertUserGroup" parameterType="com.yan.rbac.model.RbacUserGroup">
+    	insert into rbac_user_group 
+    	(id, userId, userName, groupId, groupName, validStatus, insertTime, updateTime) 
+    	values 
+    	(#{id}, #{userId}, #{userName}, #{groupId}, #{groupName}, #{validStatus}, #{insertTime}, #{updateTime})
+    </insert>
+    
+    <update id="updateUserGroupById" parameterType="com.yan.rbac.model.RbacUserGroup">
+    	update rbac_user_group
+    	set userId=#{userId}, userName=#{userName}, groupId=#{groupId}, groupName=#{groupName}, validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where id=#{id}
+    </update>
+    
+    <update id="updateUserGroupByUserIdAndGroupId" parameterType="com.yan.rbac.model.RbacUserGroup">
+    	update rbac_user_group
+    	set userName=#{userName}, groupName=#{groupName}, validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where userId=#{userId} and groupId=#{groupId}
+    </update>
+    
+    <update id="updateUserGroupValidStatusByUserIdAndGroupId" parameterType="com.yan.rbac.model.RbacUserGroup">
+    	update rbac_user_group
+    	set validStatus=#{validStatus}, updateTime=#{updateTime}
+    	where userId=#{userId} and groupId=#{groupId}
+    </update>
+    
+</mapper>
